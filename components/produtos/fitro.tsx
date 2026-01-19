@@ -4,11 +4,31 @@ import { useState } from "react";
 import { ChevronDown, Search } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
-
-const arrItems = ['Mais novo', 'Mais vendido', 'Mais barato', 'Mais caro', 'A-Z', 'Z-A'];
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { filtros } from "@/lib/utils";
 
 const Filtro = () => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const [filtro, setFiltro] = useState<string>('');
+  
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const arrItems = Object.keys(filtros);
+  const handleSelectChange = (value: string) => {
+    setIsOpen(false)
+    if (value !== '') {
+      setFiltro(value);
+    }
+  }
+  const handleFilter = (valor: string) => {
+    if (valor === '') return;
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('filtro', valor);
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+  };
 
   return (
     <div className="flex items-center gap-2 bg-white p-1 rounded-xl shadow-sm border border-slate-100 w-fit">
@@ -25,7 +45,7 @@ const Filtro = () => {
         <select
           onFocus={() => setIsOpen(true)}
           onBlur={() => setIsOpen(false)}
-          onChange={() => setIsOpen(false)}
+          onChange={(e) => handleSelectChange(e.target.value)}
           defaultValue=""
           className={cn(
             "w-full h-10 appearance-none rounded-lg border-none bg-transparent px-4 py-2 text-sm font-medium text-slate-700 outline-none cursor-pointer transition-all duration-200",
@@ -35,7 +55,7 @@ const Filtro = () => {
         >
           <option value="" disabled>Filtrar por</option>
           {arrItems.map((item, index) => (
-            <option key={index} value={item.toLowerCase()}>
+            <option key={index} value={item.toLowerCase().replace(' ', '-')}>
               {item}
             </option>
           ))}
@@ -44,6 +64,7 @@ const Filtro = () => {
 
       <Button 
         className="h-10 px-6 cursor-pointer bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg transition-all active:scale-95 flex gap-2 shadow-md shadow-zinc-200"
+        onClick={() => handleFilter(filtro)}
       >
         <Search className="h-4 w-4" />
         Buscar

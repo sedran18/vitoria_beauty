@@ -4,7 +4,6 @@ import { useParams } from 'next/navigation';
 import { categorias } from "@/lib/data/categorias";
 import Link from 'next/link';
 import Image from 'next/image';
-import Filtro from '@/components/produtos/fitro';
 
 export default function LayoutProdutos({
   children,
@@ -21,7 +20,6 @@ export default function LayoutProdutos({
       <h2 className='flex items-end w-full   h-15 lg:mt-6  px-10 lg:px-20 uppercase text-4xl font-bold text-[#fefefe] drop-shadow-md'>
         {categoriaAtiva ? categoriaAtiva : 'produtos'}
       </h2>
-        {/* <Image src='/banner/bannermake.jpg' alt='banner' height={300} width={500} className='w-full content-cover'/> */}
       </section>
 
 
@@ -76,11 +74,7 @@ export default function LayoutProdutos({
           
         </div>
       </nav>
-        <div className='flex flex-col gap-3 sm:flex-row justify-between px-5 '>
-          <span className='text-sm text-stone px-2'>203 produtos</span>
-          <Filtro />
-        </div>
-      <section className="py-10">
+      <section>
         {children}
       </section>
     </main>

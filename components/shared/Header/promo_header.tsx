@@ -29,7 +29,7 @@ export default function PromoHeader() {
 
   
   return (
-    <div className="w-full h-[30px] bg-[#FFCAD4] flex justify-center items-center text-[11px] uppercase overflow-hidden">
+    <div className="w-full h-[40px] md:h-[50px] bg-[#FFCAD4] flex justify-center items-center text-[11px] uppercase overflow-hidden">
       <p className="">
         {current.prefix} &nbsp;
         <strong>{current.highlight}</strong> &nbsp;

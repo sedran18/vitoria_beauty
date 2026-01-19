@@ -7,7 +7,7 @@ const VideoPromocional = () => {
   const [mute, setMute] = useState(true);
 
   return (
-    <section className="mt-10 w-full py-20 bg-white text-[#2D2D2D]">
+    <section className="mt-10 w-full py-20 bg-[#FDF6F0] text-[#2D2D2D]">
       <div className="max-w-4xl mx-auto px-6">
         
         <div className="text-center mb-12">
@@ -19,7 +19,7 @@ const VideoPromocional = () => {
           </h2>
         </div>
 
-        <div className="relative group overflow-hidden rounded-2xl bg-stone-100 shadow-sm border border-stone-200/50">
+        <div className="relative group overflow-hidden bg-stone-100 shadow-sm border border-stone-200/50">
           <video 
             className="w-full h-full aspect-video object-cover cursor-pointer transition-transform duration-700 group-hover:scale-[1.01]" 
             src="/videos/divulgacao-1.mp4" 
