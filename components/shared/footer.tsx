@@ -14,7 +14,7 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 
 export default function Footer() {
   return (
-    <footer className="bg-[var(--brand-primary)] pt-16 pb-8 border-t border-white/40 mt-10 shadow-xl">
+    <footer className="bg-[#FDF6F0] pt-16 pb-8 border-t border-white/40 mt-10 shadow-xl">
       <div className="container mx-auto px-4 md:px-12 lg:px-24">
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr] gap-12 mb-16">
@@ -24,7 +24,7 @@ export default function Footer() {
               <Logo />
             </Link>
 
-            <p className="text-sm text-gray-600 leading-relaxed max-w-[250px]">
+            <p className="text-sm text-justify text-gray-600 leading-relaxed max-w-[250px]">
               Sua beleza realçada com texturas leves e cuidado diário. A essência da skincare feita para você.
             </p>
           </div>
@@ -33,7 +33,7 @@ export default function Footer() {
             <h3 className="font-semibold text-[#1F1F1F] uppercase text-xs tracking-[0.2em] mb-6">
               Menu
             </h3>
-            <ul className="space-y-4 text-sm text-gray-600">
+            <ul className="space-y-4 text-sm text-gray-600 flex gap-4 md:block">
               <li><Link href="/produtos" className="hover:text-black transition-colors">Produtos</Link></li>
               <li><Link href="/kits" className="hover:text-black transition-colors">Kits</Link></li>
               <li><Link href="/sobre" className="hover:text-black transition-colors">Nossa História</Link></li>

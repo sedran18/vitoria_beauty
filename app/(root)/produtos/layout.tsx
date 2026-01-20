@@ -16,7 +16,7 @@ export default function LayoutProdutos({
 
   return (
     <main>
-      <section className='lg:mt-1 h-30 md:h-50 w-full bg-[#FABDC6] flex items-end py-10'>
+      <section className='lg:mt-1 h-30 md:h-50 w-full bg-[#e8b4b8] flex items-end py-10'>
       <h2 className='flex items-end w-full   h-15 lg:mt-6  px-10 lg:px-20 uppercase text-4xl font-bold text-[#fefefe] drop-shadow-md'>
         {categoriaAtiva ? categoriaAtiva : 'produtos'}
       </h2>

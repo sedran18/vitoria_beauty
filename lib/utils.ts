@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { ProdutosType } from "@/lib/types";
+import { Decimal } from "@prisma/client/runtime/library";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -22,11 +23,12 @@ export function interWithLoop<T>(
   return () => clearInterval(interval);
 }
 
-export function formatBRL(value: number): string {
+export function formatBRL(value: number | Decimal): string {
+  const valor = Number(value)
   return new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL',
-  }).format(value);
+  }).format(valor);
 }
 
 export const  filterByDate = <P extends { createdAt: string | Date }> (produtos:P[], order: -1 | 1 ):P[] => {
@@ -34,11 +36,16 @@ export const  filterByDate = <P extends { createdAt: string | Date }> (produtos:
 }
 
 
-export const filterByPrice = <P extends { price: number }>(
+export const filterByPrice = <P extends { price: number | Decimal  }>(
   produtos: P[],
   order: 1 | -1 
 ): P[] => {
-  return produtos.sort((a, b) => order * (a.price - b.price));
+  return produtos.sort((a, b) =>{ 
+    const preco1 = Number(a.price);
+    const preco2 = Number(b.price);
+
+    return order * (preco1 - preco2);
+  });
 };
 
 export const filterByName = <P extends {name: string}>(
@@ -57,5 +64,3 @@ export const filtros = {
   'a-z': (p: ProdutosType[]) => filterByName(p, 1),
   'z-a': (p: ProdutosType[]) => filterByName(p, -1),
 };
-
-export type FiltroKey = keyof typeof filtros;
