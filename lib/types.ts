@@ -18,6 +18,7 @@ export interface ProdutosType {
   ratingAvg: Decimal | number | null; 
   ratingCount: number | null;
   images: ProdutosImagesType[]; 
+  salesCount: number | null
   createdAt: Date;
   updatedAt: Date;
 }

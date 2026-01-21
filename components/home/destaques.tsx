@@ -6,103 +6,13 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import { ProdutosType } from "@/lib/types";
 
-interface productTest {
-  id: string;
-  thumbnails: string[];
-  slug: string;
-  rate: number;
-  description: string;
-  price: number;
-  votos: number;
-  name: string;
+interface DestaquesType {
+  produtos: ProdutosType[]
 }
 
-const produtosTeste: productTest[] = [
-  {
-    id: '1',
-    thumbnails: ['/teste1.webp', '/teste2.webp'],
-    slug: 'teste',
-    rate: 5,
-    description: 'produto vendkiddo mais famoso do Brasil',
-    price: 29,
-    votos: 90,
-    name: 'teste produto',
-  },
-  {
-    id: '2',
-    thumbnails: ['/teste1.webp', '/teste2.webp'],
-    slug: 'teste',
-    rate: 5,
-    description: 'produto vendkiddo mais famoso do Brasil',
-    price: 29,
-    votos: 90,
-    name: 'teste produto',
-  },
-  {
-    id: '3',
-    thumbnails: ['/teste1.webp', '/teste2.webp'],
-    slug: 'teste',
-    rate: 5,
-    description: 'produto vendkiddo mais famoso do Brasil',
-    price: 29,
-    votos: 90,
-    name: 'teste produto',
-  },
-  {
-    id: '4',
-    thumbnails: ['/teste1.webp', '/teste2.webp'],
-    slug: 'teste',
-    rate: 5,
-    description: 'produto vendkiddo mais famoso do Brasil',
-    price: 29,
-    votos: 90,
-    name: 'teste produto',
-  },
-  {
-    id: '5',
-    thumbnails: ['/teste1.webp', '/teste2.webp'],
-    slug: 'teste',
-    rate: 5,
-    description: 'produto vendkiddo mais famoso do Brasil',
-    price: 29,
-    votos: 90,
-    name: 'teste produto',
-  },
-  {
-    id: '6',
-    thumbnails: ['/teste1.webp', '/teste2.webp'],
-    slug: 'teste',
-    rate: 5,
-    description: 'produto vendkiddo mais famoso do Brasil',
-    price: 29,
-    votos: 90,
-    name: 'teste produto',
-  },
-  {
-    id: '7',
-    thumbnails: ['/teste1.webp', '/teste2.webp'],
-    slug: 'teste',
-    rate: 5,
-    description: 'produto vendkiddo mais famoso do Brasil',
-    price: 29,
-    votos: 90,
-    name: 'teste produto',
-  },
-  {
-    id: '8',
-    thumbnails: ['/teste1.webp', '/teste2.webp'],
-    slug: 'teste',
-    rate: 5,
-    description: 'produto vendkiddo mais famoso do Brasil',
-    price: 29,
-    votos: 90,
-    name: 'teste produto',
-  },
-  
-];
-
-const Destaques = () => {
+const Destaques = ({produtos}: DestaquesType) => {
   return (
     <section className="mt-16 w-full">
       <div className="mb-10 text-center">
@@ -119,7 +29,7 @@ const Destaques = () => {
         <div className="lg:hidden">
           <Carousel opts={{ align: "start" }} className="w-full">
             <CarouselContent className="-ml-2">
-              {produtosTeste.map((p) => (
+              {produtos.map((p) => (
                 <CarouselItem
                   key={p.id}
                   className="pl-2 basis-[82%] sm:basis-[45%]"
@@ -132,7 +42,7 @@ const Destaques = () => {
         </div>
 
         <div className="hidden lg:grid grid-cols-4 gap-6">
-          {produtosTeste.map((p) => (
+          {produtos.map((p) => (
             <ProdutoCard key={p.id} {...p} />
           ))}
         </div>

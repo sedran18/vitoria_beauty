@@ -57,8 +57,8 @@ export const filterByName = <P extends {name: string}>(
 
 
 export const filtros = {
-  // 'mais-novo': (p: ProdutosType[]) => filterByDate(p, 1),
-  // 'mais-antigo': (p: ProdutosType[]) => filterByDate(p, -1),
+  'mais-novo': (p: ProdutosType[]) => filterByDate(p, 1),
+  'mais-antigo': (p: ProdutosType[]) => filterByDate(p, -1),
   'mais-barato': (p: ProdutosType[]) => filterByPrice(p, 1),
   'mais-caro': (p: ProdutosType[]) => filterByPrice(p, -1),
   'a-z': (p: ProdutosType[]) => filterByName(p, 1),

@@ -25,9 +25,10 @@ model Product {
   price       Decimal  @db.Decimal(10, 2)
   stock       Int
   category    String   @db.VarChar(70)
-  ratingAvg     Decimal? @db.Decimal(3, 2) @default(0)
+  ratingAvg    Decimal? @db.Decimal(3, 2) @default(0)
   ratingCount   Int?      @default(0)
 
+  salesCount    Int @default(0)
   ratings       Rating[]
   images      ProductImage[]
   createdAt   DateTime @default(now()) @db.Timestamptz(6)
