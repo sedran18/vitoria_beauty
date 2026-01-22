@@ -29,7 +29,7 @@ export default function Menu() {
         </Link>
 
         <Link
-          href="/kits"
+          href="/produtos/kits"
           className="uppercase text-sm  
                      text-grey-800 transition-colors
                      hover:text-[var(--accent)]

@@ -62,7 +62,7 @@ export default function CategoryCarousel() {
               className="pl-3 basis-[45%]  sm:basis-[40%] md:basis-[45%] lg:basis-[30%]"
             >
               <Link
-                href={`/${cat.slug}`}
+                href={`/produtos/${cat.slug}`}
                 className="group relative flex  aspect-square items-center justify-center overflow-hidden rounded-2xl shadow-sm"
               >
                 <Image

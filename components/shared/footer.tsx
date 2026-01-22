@@ -35,8 +35,7 @@ export default function Footer() {
             </h3>
             <ul className="space-y-4 text-sm text-gray-600 flex gap-4 md:block">
               <li><Link href="/produtos" className="hover:text-black transition-colors">Produtos</Link></li>
-              <li><Link href="/kits" className="hover:text-black transition-colors">Kits</Link></li>
-              <li><Link href="/sobre" className="hover:text-black transition-colors">Nossa História</Link></li>
+              <li><Link href="/produtos/kits" className="hover:text-black transition-colors">Kits</Link></li>
             </ul>
           </div>
 

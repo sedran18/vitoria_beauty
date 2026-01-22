@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Volume2, VolumeX } from 'lucide-react';
+import Link from 'next/link';
 
 const VideoPromocional = () => {
   const [mute, setMute] = useState(true);
@@ -47,11 +48,11 @@ const VideoPromocional = () => {
         </div>
 
         <div className="mt-14 text-center">
-          <button 
+          <Link href='/produtos'
             className=" cursor-pointer inline-block border-b border-stone-800 pb-1 text-sm font-medium tracking-wide uppercase hover:text-rose-400 hover:border-rose-400 transition-all duration-300"
           >
             Descobrir Coleção
-          </button>
+          </Link>
         </div>
 
       </div>

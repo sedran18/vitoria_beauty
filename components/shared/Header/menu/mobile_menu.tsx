@@ -52,7 +52,7 @@ const MobileMenu = () => {
           onClick={() => setIsOpen(false)}>
             Produtos
           </Link>
-          <Link href='/' className="
+          <Link href='/produtos/kits' className="
             uppercase 
             text-gray-800
             border-b border-gray-200 py-6 px-2

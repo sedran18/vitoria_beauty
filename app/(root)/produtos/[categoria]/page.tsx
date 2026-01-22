@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { countProdutos,  getProductsByCategory } from "@/lib/actions/products";
 import { FiltroKey } from "@/lib/types";
 import { filtros } from "@/lib/utils";
+import CarregarMaisBtn from "@/components/produtos/carregarMaisBtn";
 
 const Categoria = async ({ 
   searchParams, params
@@ -44,14 +45,7 @@ const Categoria = async ({
                       </div>
 })}
           </div>
-
-          <div className="flex justify-center mt-12">
-            <Button 
-              className="bg-transparent cursor-pointer hover:bg-[#333] hover:text-[#fefefe] px-3 py-6  transition-all duration-400 ease  font-base border-1"
-            >
-              Carregar mais
-            </Button>
-          </div>
+        <CarregarMaisBtn productLen={produtos.length} totalProducts={qtndprodutos}/>
         </section>
     </>)
 }

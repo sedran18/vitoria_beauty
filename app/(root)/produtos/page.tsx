@@ -1,19 +1,22 @@
 import { getProducts, countProdutos } from "@/lib/actions/products";
-import { Button } from "@/components/ui/button";
 import ProdutoCard from "@/components/shared/produto-card";
 import Filtro from "@/components/produtos/fitro";
 import { filtros } from "@/lib/utils";
 import { type FiltroKey } from "@/lib/types";
+import CarregarMaisBtn from "@/components/produtos/carregarMaisBtn";
 
 export default async function Produtos({ 
   searchParams 
 }: { 
-  searchParams: Promise<{ filtro ?: string}>
+  searchParams: Promise<{ filtro ?: string, page ?: number}>
 }) {
-  const produtosRes = await  getProducts();
+  const { filtro, page } = await searchParams;
+  
+  const pagina = page ?? 1
+  const produtosRes = await  getProducts(pagina * 12);
   
 
-  const { filtro } = await searchParams;
+
   const acaoDoFiltro =
   filtro && filtro in filtros
     ? filtros[filtro as FiltroKey]
@@ -24,7 +27,7 @@ export default async function Produtos({
 
   const produtosRenderizados = acaoDoFiltro? acaoDoFiltro(produtos) : produtos;
 
-  const qtndprodutos = countProdutos();
+  const qtndprodutos = await countProdutos();
   
   return (<>
             <div className='flex flex-col gap-3 sm:flex-row justify-between px-12 '>
@@ -41,13 +44,9 @@ export default async function Produtos({
 })}
           </div>
 
-          <div className="flex justify-center mt-12">
-            <Button 
-              className="bg-transparent cursor-pointer hover:bg-[#333] hover:text-[#fefefe] px-3 py-6  transition-all duration-400 ease  font-base border-1"
-            >
-              Carregar mais
-            </Button>
-          </div>
+        <CarregarMaisBtn productLen={produtos.length} totalProducts={qtndprodutos}/>
+      
+          
         </section>
     </>)
 }

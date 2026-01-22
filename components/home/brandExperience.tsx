@@ -1,6 +1,7 @@
 'use client';
 
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 export default function BrandExperience() {
   return (
@@ -33,10 +34,10 @@ export default function BrandExperience() {
                 </li>
               </ul>
 
-              <button className="group my-4 w-full flex items-center justify-center gap-2 text-sm font-medium uppercase tracking-[0.2em] text-[#1F1F1F]">
+              <Link href='/produtos' className="group my-4 w-full flex items-center justify-center gap-2 text-sm font-medium uppercase tracking-[0.2em] text-[#1F1F1F]">
                 Conhecer a coleção
                 <div className="h-[1px] w-8 bg-black transition-all group-hover:w-12" />
-              </button>
+              </Link >
             </div>
           </div>
 
