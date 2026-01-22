@@ -71,6 +71,7 @@ const countProdutos = async (category?: string) => {
     });
 }
 
+//os mais vendidos
 const getBySalesCount = async (limit: number = 4): Promise<ServerResponse> => {
     try {
         const produtos = await prisma.product.findMany({
@@ -98,5 +99,27 @@ const getBySalesCount = async (limit: number = 4): Promise<ServerResponse> => {
         return { success: false, error: "Falha ao carregar destaques." };
     }
 }
+//pegar um único por id
+const getProductById = async (id: string) => {
+    const produto = await prisma.product.findUnique({
+        where: {
+            id
+        }, 
+        include: {
+            images: true
+        }
+    });
+    const produtoSerializado = produto ? {
+        ...produto,
+        price: Number(produto.price),
+        ratingAvg: produto.ratingAvg ? Number(produto.ratingAvg) : 0,
+    } : null
+    return produtoSerializado;
+}
 
-export { getProducts, getProductsByCategory, countProdutos, getBySalesCount }
+export { 
+    getProducts, 
+    getProductsByCategory, 
+    countProdutos, 
+    getBySalesCount,
+    getProductById }

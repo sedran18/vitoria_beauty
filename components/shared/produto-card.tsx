@@ -25,7 +25,7 @@ export default function ProdutoCard({
 
   return (
     <Card className="group flex h-full flex-col gap-1 overflow-hidden border-none bg-white p-0 shadow-none transition-all hover:shadow-sm justify-between">
-      <Link href={`/products/${id}`} className="relative block overflow-hidden">
+      <Link href={`/detalhes/${id}`} className="relative block overflow-hidden">
         <CardContent className="relative aspect-square w-full p-0 bg-gray-100">
           <Image
             src={images[currentImg].url || "/placeholder.png"}
@@ -48,7 +48,7 @@ export default function ProdutoCard({
           <span className="font-bold text-sm">{formatBRL(price)}</span>
         </div>
 
-        <Link href={`/products/${id}`} className="w-full block  flex items-start flex-col">
+        <Link href={`/detalhes/${id}`} className="w-full block  flex items-start flex-col">
         <h3 className="font-semibold text-xs md:text-sm line-clamp-2 group-hover:underline">
           {name}
         </h3>

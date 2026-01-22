@@ -1,6 +1,5 @@
 import Filtro from "@/components/produtos/fitro";
 import ProdutoCard from "@/components/shared/produto-card";
-import { Button } from "@/components/ui/button";
 import { countProdutos,  getProductsByCategory } from "@/lib/actions/products";
 import { FiltroKey } from "@/lib/types";
 import { filtros } from "@/lib/utils";

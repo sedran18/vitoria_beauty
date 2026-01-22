@@ -15,10 +15,10 @@ export interface ProdutosType {
   price: Decimal | number;
   stock: number;
   category: string;
-  ratingAvg: Decimal | number | null; 
+  ratingAvg: Decimal | number; 
   ratingCount: number | null;
   images: ProdutosImagesType[]; 
-  salesCount: number | null
+  salesCount: number
   createdAt: Date;
   updatedAt: Date;
 }
