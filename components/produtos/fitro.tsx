@@ -32,7 +32,7 @@ const Filtro = () => {
 
   return (
     <div className="flex items-center gap-2 bg-white p-1 rounded-xl shadow-sm border border-slate-100 w-fit">
-      <div className="relative w-44 group">
+      <div className="relative w-35 group">
         <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none z-10 transition-colors duration-200">
           <ChevronDown
             className={cn(

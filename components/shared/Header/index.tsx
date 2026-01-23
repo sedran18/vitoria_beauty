@@ -7,6 +7,8 @@ import {UserIcon, SearchIcon, ShoppingBag} from 'lucide-react';
 import PromoHeader from "./promo_header";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import SearchBar from "./SearchBar";
+
 export default function Header() {
     const [isHero, setIsHero] = useState(true);
 
@@ -39,7 +41,7 @@ export default function Header() {
                     )}
                 >
                 <Menu/>
-                <SearchIcon size={20} className="md:hidden"/>
+                <SearchBar isMobile={true} />
                 
                 <Link href='/' className="flex text-center justify-center flex-col items-center 
                 hover:scale-103 transition-all duration-800 ease">
@@ -47,7 +49,7 @@ export default function Header() {
                 </Link>
 
                 <div className="h-full w-auto flex items-center justify-end gap-3 md:gap-8">
-                    <SearchIcon size={20} className="hidden md:block "/>
+                    <SearchBar  isMobile={false}/>
                     <ShoppingBag size={20} />
                     < UserIcon size={20}/>
                 </div>

@@ -117,9 +117,26 @@ const getProductById = async (id: string) => {
     return produtoSerializado;
 }
 
+const  searchProducts = async (query: string) => {
+  return  prisma.product.findMany({
+    where: {
+      name: {
+        contains: query,
+        mode: "insensitive", 
+      },
+    },
+    select: {
+      id: true,
+      name: true,
+    },
+    take: 10
+  });
+}
+
 export { 
     getProducts, 
     getProductsByCategory, 
     countProdutos, 
     getBySalesCount,
-    getProductById }
+    getProductById,
+    searchProducts }
