@@ -50,7 +50,9 @@ export default function Header() {
 
                 <div className="h-full w-auto flex items-center justify-end gap-3 md:gap-8">
                     <SearchBar  isMobile={false}/>
-                    <ShoppingBag size={20} />
+                    <Link href={'/carrinho'}>
+                        <ShoppingBag size={20}/>
+                    </Link>
                     < UserIcon size={20}/>
                 </div>
             </div>

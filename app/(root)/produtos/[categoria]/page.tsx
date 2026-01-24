@@ -31,8 +31,9 @@ const Categoria = async ({
   const qtndprodutos = await countProdutos(categoria);
   
   return (<>
-            <div className='flex flex-col gap-3 sm:flex-row justify-between px-12 '>
-              <span className='text-sm text-stone '>{qtndprodutos}</span>
+            <div className='flex  gap-1 flex justify-between
+             px-4 items-center lg:px-12'>
+              <span className='text-md text-stone '>{qtndprodutos}</span>
                 <Filtro />
             </div>
 
