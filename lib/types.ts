@@ -23,4 +23,10 @@ export interface ProdutosType {
   updatedAt: Date;
 }
 
+export interface RegisterFormType {
+  email: string, 
+  password: string,
+  name: string,
+}
+
 export type FiltroKey = keyof typeof filtros;
