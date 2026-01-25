@@ -2,8 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Mail, User, Lock, Loader2, UserPlus, AlertCircle } from "lucide-react";
+import { Mail, Eye, EyeOff, User, Lock, Loader2, UserPlus, AlertCircle } from "lucide-react";
 import Logo from "../shared/logo";
+import { registerAction } from "@/lib/actions/register";
+import { useRouter } from "next/navigation";
+import SuccessScreen from "./SuccessScreen";
 
 export default function RegisterForm() {
     const [loading, setLoading] = useState(false);
@@ -13,30 +16,51 @@ export default function RegisterForm() {
         password: "",
         confirmPassword: ""
     });
+    const [verSenha1, setVerSenha1] = useState(false);
+    const [verSenha2, setVerSenha2] = useState(false);
+    const router = useRouter()
     const [error, setError] = useState("");
+    const [usuarioCriado, setUsuarioCriado] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError("");
 
-        // Validação de confirmação de senha
         if (formData.password !== formData.confirmPassword) {
             setError("As senhas não coincidem.");
             return;
         }
+        if (formData.password.length < 8) {
+            setError("A senha precisa ter no mínimo 8 caracteres");
+            return;
+        }
 
         setLoading(true);
-        
-        // Simulando envio
-        setTimeout(() => {
-            setLoading(false);
-            console.log("Dados enviados:", formData);
-        }, 2000);
+        try {
+            const res = await registerAction(formData);
+            if (res?.error) throw new Error(res?.error);
+
+            setUsuarioCriado(true);
+            setTimeout(() => {
+                router.push("/login")
+            }, 6000)
+
+        } catch (err){
+            if (err instanceof Error) {
+                setError(err.message)
+            } else {
+                setError("Erro inesperado")
+            }
+        } finally {
+            setLoading(false)
+        }
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
+
+    if (usuarioCriado) return (<SuccessScreen name={formData.name}/>)
 
     return (
         <div className="w-full max-w-md mx-auto p-10 bg-white shadow-2xl rounded-xl border border-gray-100">
@@ -90,13 +114,29 @@ export default function RegisterForm() {
                         <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#C7A39D] transition-colors" size={20} />
                         <input 
                             name="password"
-                            type="password" 
+                            type={verSenha1 ? 'text' : 'password'} 
                             required
                             value={formData.password}
                             onChange={handleChange}
                             placeholder="••••••••"
                             className="w-full pl-12 pr-4 py-4 bg-white border-2 border-gray-100 rounded-2xl outline-none focus:border-[#C7A39D] focus:ring-4 focus:ring-[#C7A39D]/10 transition-all text-gray-900 font-medium"
                         />
+                        {
+                            verSenha1 ? 
+                            <EyeOff 
+                                size={20} 
+                                onClick={() => setVerSenha1(false)} 
+                                className="cursor-pointer absolute right-4 top-1/2 
+                                -translate-y-1/2 text-gray-400"
+                            /> 
+                            : 
+                            <Eye 
+                                size={20} 
+                                onClick={() => setVerSenha1(true)} 
+                                className="cursor-pointer absolute right-4 top-1/2
+                                -translate-y-1/2 text-gray-400"
+                            />
+                        }
                     </div>
                 </div>
 
@@ -106,15 +146,32 @@ export default function RegisterForm() {
                         <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#C7A39D] transition-colors" size={20} />
                         <input 
                             name="confirmPassword"
-                            type="password" 
+                            type={verSenha2 ? 'text' : 'password'} 
                             required
                             value={formData.confirmPassword}
                             onChange={handleChange}
                             placeholder="Repita sua senha"
+                            autoComplete="new-password"
                             className={`w-full pl-12 pr-4 py-4 bg-white border-2 rounded-2xl outline-none transition-all text-gray-900 font-medium ${
                                 error ? 'border-red-200 focus:border-red-400' : 'border-gray-100 focus:border-[#C7A39D] focus:ring-4 focus:ring-[#C7A39D]/10'
                             }`}
                         />
+                        {
+                            verSenha2 ? 
+                            <EyeOff 
+                                size={20} 
+                                onClick={() => setVerSenha2(false)} 
+                                className="cursor-pointer absolute right-4 top-1/2 
+                                -translate-y-1/2 text-gray-400"
+                            /> 
+                            : 
+                            <Eye 
+                                size={20} 
+                                onClick={() => setVerSenha2(true)} 
+                                className="cursor-pointer absolute right-4 top-1/2
+                                -translate-y-1/2 text-gray-400"
+                            />
+                        }
                     </div>
                 </div>
 

@@ -3,22 +3,29 @@
 import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
 import { redirect } from "next/navigation"
-import { RegisterFormType
+import { RegisterFormType} from "../types";
+import { error } from "console";
 
- } from "../types"
-export async function registerAction({name, email, password} : RegisterFormType) {
+export async function registerAction({name, email, password, confirmPassword} : RegisterFormType) {
 
   if (!name || !email || !password) {
-    return { error: "Todos os campos são obrigatórios." }
+    return { sucess: false, error: "Todos os campos são obrigatórios." }
   }
 
+  if (confirmPassword !== password) {
+    return { sucess: false, error: "Senhas não coincidem" }
+  }
+
+  if(password.length < 8) {
+    return { sucess: false, error: "Senhas precisa ter no mínimo 8 caracteres" }
+  }
   try {
     const existingUser = await prisma.user.findUnique({
       where: { email }
     })
 
     if (existingUser) {
-      return { error: "Este e-mail já está cadastrado." }
+      return { sucess: false, error: "Este e-mail já está cadastrado." }
     }
 
     const hashedPassword = await bcrypt.hash(password, 10)
@@ -32,8 +39,9 @@ export async function registerAction({name, email, password} : RegisterFormType)
     })
 
   } catch (error) {
-    return { error: "Erro ao criar conta. Tente novamente. " + error }
+    console.log(error)
+    return { sucess: false, error: "Erro ao criar conta. Tente novamente. "}
   }
+  return {sucess: true, error: null}
 
-  redirect("/login")
 }
