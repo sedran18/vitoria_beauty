@@ -3,11 +3,12 @@
 import Logo from "@/components/shared/logo";
 import Link from "next/link";
 import Menu from "./menu";
-import {UserIcon, SearchIcon, ShoppingBag} from 'lucide-react';
+import { ShoppingBag} from 'lucide-react';
 import PromoHeader from "./promo_header";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import SearchBar from "./SearchBar";
+import UserMenu from "./user/userMenu";
 
 export default function Header() {
     const [isHero, setIsHero] = useState(true);
@@ -53,7 +54,7 @@ export default function Header() {
                     <Link href={'/carrinho'}>
                         <ShoppingBag size={20}/>
                     </Link>
-                    < UserIcon size={20}/>
+                    <UserMenu />
                 </div>
             </div>
             <div className="lg:h-20 lg:bg-white"></div>

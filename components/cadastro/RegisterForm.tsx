@@ -7,6 +7,7 @@ import Logo from "../shared/logo";
 import { registerAction } from "@/lib/actions/register";
 import { useRouter } from "next/navigation";
 import SuccessScreen from "./SuccessScreen";
+import { signIn } from "next-auth/react";
 
 export default function RegisterForm() {
     const [loading, setLoading] = useState(false);
@@ -30,29 +31,35 @@ export default function RegisterForm() {
             setError("As senhas não coincidem.");
             return;
         }
-        if (formData.password.length < 8) {
-            setError("A senha precisa ter no mínimo 8 caracteres");
-            return;
-        }
 
         setLoading(true);
         try {
             const res = await registerAction(formData);
-            if (res?.error) throw new Error(res?.error);
+
+            if (!res.sucess) { 
+                throw new Error(res.error || "Erro ao registrar");
+            }
 
             setUsuarioCriado(true);
-            setTimeout(() => {
-                router.push("/login")
-            }, 6000)
 
-        } catch (err){
-            if (err instanceof Error) {
-                setError(err.message)
-            } else {
-                setError("Erro inesperado")
-            }
-        } finally {
-            setLoading(false)
+                const result = await signIn("credentials", {
+                    email: formData.email,
+                    password: formData.password,
+                    redirect: false, 
+                });
+
+                if (result?.error) {
+                    console.error("Erro no login automático:", result.error);
+                }
+
+            setTimeout(() => {
+                router.push("/");
+                router.refresh(); 
+            }, 4000);
+
+        } catch (err) {
+            setLoading(false); 
+            setError(err instanceof Error ? err.message : "Erro inesperado");
         }
     };
 

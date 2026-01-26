@@ -21,7 +21,7 @@ export default function SuccessScreen({ name}: SuccessScreenProps) {
                     transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
                     className="h-20 w-20 rounded-full border border-[#C7A39D]/30 flex items-center justify-center bg-[#C7A39D]/5"
                 >
-                    <Check className="text-[#C7A39D]" size={32} strokeWidth={1.5} />
+                    <Check className="text-[#C7A39D]" size={32} strokeWidth={1.5} /> 
                 </motion.div>
                 
                 <motion.div 
@@ -34,7 +34,7 @@ export default function SuccessScreen({ name}: SuccessScreenProps) {
 
             <div className="space-y-2">
                 <h2 className="text-xl font-medium text-gray-800">
-                    Bem-vinda, {name.split(' ')[0]}!
+                    Seja bem vindo, {name.split(' ')[0]}!
                 </h2>
                 <p className="text-sm text-gray-500 max-w-[220px] mx-auto leading-relaxed">
                     Sua conta foi criada com sucesso. Estamos preparando seu acesso...
@@ -45,7 +45,7 @@ export default function SuccessScreen({ name}: SuccessScreenProps) {
                 <motion.div 
                     initial={{ width: 0 }}
                     animate={{ width: "100%" }}
-                    transition={{ duration: 6 }}
+                    transition={{ duration: 4 }}
                     className="h-full bg-[#C7A39D]"
                 />
             </div>

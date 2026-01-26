@@ -2,9 +2,7 @@
 
 import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
-import { redirect } from "next/navigation"
 import { RegisterFormType} from "../types";
-import { error } from "console";
 
 export async function registerAction({name, email, password, confirmPassword} : RegisterFormType) {
 
@@ -37,11 +35,9 @@ export async function registerAction({name, email, password, confirmPassword} : 
         password: hashedPassword
       }
     })
-
   } catch (error) {
     console.log(error)
     return { sucess: false, error: "Erro ao criar conta. Tente novamente. "}
   }
-  return {sucess: true, error: null}
-
+    return {sucess: true, error: null}
 }
