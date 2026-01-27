@@ -26,18 +26,25 @@ export default function LoginForm() {
         }
 
         try {
-            await signIn('credentials', {                
+            const loginRes = await signIn('credentials', {                
                 email: formData.email,
                 password: formData.password,
-                redirect: true,
-                callbackUrl: "/",} );
+                redirect: false
+                } );
+
+            if (loginRes?.error) {
+                setError("E-mail ou senha inválidos.");
+                console.log(loginRes.error)
+                setLoading(false);
+                return;
+            }
+
+            window.location.href = '/'
         }catch (err) {
             setError('Erro ao fazer login');
             console.log(err)
-
-        } finally {
             setLoading(false)
-        }
+        } 
     };
 
     return (

@@ -31,3 +31,12 @@ export interface RegisterFormType {
 }
 
 export type FiltroKey = keyof typeof filtros;
+
+export interface UserMenuProps {
+  user?: {
+    id?: string;         
+    name?: string | null;
+    email?: string | null;
+    image?: string | null; 
+  } | null;
+}
