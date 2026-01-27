@@ -7,7 +7,7 @@ export default auth((req) => {
 
     const isApiAuthRoute = nextUrl.pathname.startsWith("/api/auth");
   
-    const privateRoutes = ["/perfil", "/configuracoes", "/carrinho"];
+    const privateRoutes = ["/perfil", "/configuracoes"];
     const isPrivateRoute = privateRoutes.some(route => nextUrl.pathname.startsWith(route));;
 
     const isAuthRoute = ["/login", "/cadastro"].includes(nextUrl.pathname);

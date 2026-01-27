@@ -12,7 +12,7 @@ model User {
   name      String   @db.VarChar(100) 
   email     String   @unique @db.VarChar(255)
   password  String?  @db.VarChar(255)
-
+  image     String?   @map("avatar_url")
   ratings   Rating[]
   createdAt DateTime @default(now()) @db.Timestamptz(6)
   updatedAt DateTime @updatedAt @db.Timestamptz(6)
@@ -27,7 +27,7 @@ model Product {
   category    String   @db.VarChar(70)
   ratingAvg    Decimal? @db.Decimal(3, 2) @default(0)
   ratingCount   Int?      @default(0)
-
+  
   salesCount    Int @default(0)
   ratings       Rating[]
   images      ProductImage[]
