@@ -13,9 +13,13 @@ const Perfil = async () => {
   return (
     <div className="max-w-4xl mt-7  mx-auto space-y-8">
       <div className="bg-white rounded-[2.5rem] p-8 shadow-sm border border-[var(--brand-primary)]/30 flex flex-col md:flex-row items-center gap-6">
-        <div className="w-24 h-24 rounded-full bg-[var(--brand-soft)] border-2 border-[var(--brand-primary)] flex items-center justify-center overflow-hidden text-[var(--brand-secondary)] text-3xl font-black shadow-inner">
+        <div className="w-24 h-24 relative rounded-full bg-[var(--brand-soft)] border-2 border-[var(--brand-primary)] flex items-center justify-center overflow-hidden text-[var(--brand-secondary)] text-3xl font-black shadow-inner">
           {user?.image ? (
-             <Image src={user.image} alt={user.name ?? ''} className="w-full h-full object-cover" />
+             <Image src={user.image} 
+             alt={user.name ?? ''} 
+             fill
+             sizes='48'
+             className="w-full h-full object-cover rounded-full" />
           ) : (
             user?.name?.charAt(0).toUpperCase()
           )}

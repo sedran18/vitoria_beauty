@@ -11,23 +11,28 @@ export default async function LayoutConfiguracoes({
   const secoes = ['Perfil', 'Conta'];
 
   return (
-    <main className="flex -mb-10 flex-col lg:flex-row min-h-screen w-full bg-[var(--brand-soft)]">
-      <section className="w-full lg:w-72 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-200/60 bg-white/80 backdrop-blur-md sticky top-0 lg:h-screen z-40">
+    <main className="flex -mb-10  flex-col lg:flex-row min-h-screen w-full bg-[var(--brand-soft)]">
+      <section className="w-full pt-9 lg:w-72 flex flex-col border-b
+       lg:border-b-0 lg:border-r border-gray-200/60 bg-white/80
+         sticky top-0 lg:h-full  lg:min-h-screen z-40 ">
         
         <div className="hidden lg:block p-8 pb-6">
           <h2 className="text-md font-black uppercase text-[var(--brand-secondary)] tracking-[0.25em]">
             Configurações
           </h2>
         </div>
-
         <div className="flex lg:flex-col flex-1 justify-between p-3 lg:p-4">
           
-          <nav className="flex lg:flex-col gap-1.5 items-center lg:items-stretch overflow-x-auto scrollbar-hide">
+          <nav className="flex lg:flex-col gap-1.5 items-center
+           lg:items-stretch overflow-x-auto scrollbar-hide">
             {secoes.map(s => (
               <Link 
                 key={s.toLowerCase()} 
                 href={`${prefix}/${s.toLowerCase()}`}
-                className="px-5 py-2.5 lg:px-4 lg:py-3 rounded-xl transition-all text-sm font-bold text-[var(--text-primary)]/70 hover:text-[var(--brand-secondary)] hover:bg-[var(--brand-soft)] active:scale-95 whitespace-nowrap"
+                className="px-5 py-2.5 lg:px-4 lg:py-3 rounded-xl 
+                transition-all text-sm font-bold 
+                text-[var(--text-primary)]/70 hover:text-[var(--brand-secondary)]
+                 hover:bg-[var(--brand-soft)] active:scale-95 whitespace-nowrap"
               >
                 {s}
               </Link>
@@ -65,8 +70,8 @@ export default async function LayoutConfiguracoes({
         </div>
       </section>
 
-      <section className="flex-1 p-6 lg:p-16 overflow-y-auto">
-        <div className="max-w-4xl mx-auto">
+      <section className="flex-1 pt-2  ">
+        <div className="mx-auto mt-6 ">
           {children}
         </div>
       </section>

@@ -1,9 +1,15 @@
-const PerfilConfiguracao = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+import UpdateProfileForm from "@/components/configuracoesPerfil/updateProfileForm";
+import { auth } from "@/auth";
 
-export default PerfilConfiguracao
+const PerfilConfiguracao = async  () => {
+  const session = await auth();
+  const user =  session?.user;
+
+  return (
+   <>
+   <UpdateProfileForm  user={user}/>
+   </>
+  );
+};
+
+export default PerfilConfiguracao;

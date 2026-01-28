@@ -19,6 +19,8 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 import { type UserMenuProps } from "@/lib/types";
+import Image from "next/image";
+
 
 
 export default function UserMenu({ user }: UserMenuProps) {
@@ -41,7 +43,7 @@ export default function UserMenu({ user }: UserMenuProps) {
           variant="ghost"
           className="
             relative
-            h-12 w-12
+            h-10 w-10
             rounded-full
             p-0
             shadow-sm
@@ -54,7 +56,16 @@ export default function UserMenu({ user }: UserMenuProps) {
             focus-visible:ring-offset-2
           "
         >
+          {user ? 
+          <Image src={
+            user.image || ''}
+            fill 
+            alt="avatar"  
+            className="object-cover rounded-full"
+            sizes="40px"/>
+          : 
           <User className="h-6 w-6 text-muted-foreground" />
+          }
         </Button>
       </DropdownMenuTrigger>
 
@@ -77,7 +88,7 @@ export default function UserMenu({ user }: UserMenuProps) {
         </DropdownMenuItem>
 
         <DropdownMenuItem asChild className="cursor-pointer rounded-lg focus:bg-[#C7A39D]/10 focus:text-[#C7A39D] transition-colors">
-          <Link href="/configuracoes" className="flex w-full items-center p-2">
+          <Link href="/configuracoes/perfil" className="flex w-full items-center p-2">
             <Settings className="mr-3" size={18} />
             <span className="text-sm font-medium">Configurações</span>
           </Link>
