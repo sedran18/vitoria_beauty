@@ -3,7 +3,7 @@ import prisma from "../prisma";
 import bcrypt from "bcryptjs";
 import { supabaseAdmin } from "../supabase";
 import { revalidatePath } from 'next/cache';
-
+import {signOut} from '@/auth';
 export const getRatingsFromUser = async (id:string) => {
     const user  = await prisma.user.findUnique({
         where: {
@@ -141,3 +141,23 @@ export const handleUpdateUserProfile = async (formData: FormData, userId: string
         return false;
     }
 }
+
+export const deleteUser = async (userId: string, formData: FormData) => {
+  const password = formData.get('password') as string;
+
+  try {
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    
+    if (!user || !user.password) return { success: false, error: "Usuário não encontrado" };
+
+    const isValid = await bcrypt.compare(password, user.password);
+    if (!isValid) return { success: false, error: "Senha incorreta" };
+
+    await prisma.user.delete({ where: { id: userId } });
+
+  } catch (err) {
+    console.error(err);
+    return { success: false, error: "Erro ao deletar conta" };
+  }
+    await signOut({ redirectTo: "/login" });
+};

@@ -58,8 +58,10 @@ const Conta = async () => {
               Esta ação é permanente e removerá todo seu histórico de compras e avaliações.
             </p>
           </div>
-          <button className="px-8 py-3 bg-white border border-red-200 text-red-600 rounded-2xl font-bold text-[10px] uppercase tracking-widest hover:bg-red-600 hover:text-white transition-all shadow-sm">
-            Encerrar Conta
+          <button className="px-8 cursor-pointer py-3 bg-white border border-red-200 text-red-600 rounded-2xl font-bold text-[10px] uppercase tracking-widest hover:bg-red-600 hover:text-white transition-all shadow-sm">
+            <Link href={'/configuracoes/conta/remover'}>
+              Encerrar Conta
+            </Link>
           </button>
         </div>
       </section>
