@@ -128,6 +128,7 @@ const  searchProducts = async (query: string) => {
     select: {
       id: true,
       name: true,
+      images: true
     },
     take: 10
   });

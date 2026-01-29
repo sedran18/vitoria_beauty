@@ -3,14 +3,15 @@
 import { useState, useEffect, useRef } from "react";
 import { searchProducts } from "@/lib/actions/products";
 import Link from "next/link";
-import { SearchIcon, X, Loader2, ArrowRight } from "lucide-react";
+import { SearchIcon, X, } from "lucide-react";
 import { ProdutosType } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 export default function SearchBar({ isMobile }: { isMobile: boolean }) {
     const [open, setOpen] = useState(false);
     const [query, setQuery] = useState("");
-    const [results, setResults] = useState<Pick<ProdutosType, 'id' | 'name'>[]>([]);
+    const [results, setResults] = useState<Pick<ProdutosType, 'id' | 'name' | 'images'>[]>([]);
     const [loading, setLoading] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -76,18 +77,27 @@ export default function SearchBar({ isMobile }: { isMobile: boolean }) {
                 </button>
             </div>
 
-            <div className="mt-6 bg-white">
+            <div className="mt-6 bg-white ">
                 {loading && <p className="text-sm text-gray-400 italic">Buscando...</p>}
 
                 {!loading && results.length > 0 && (
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-2 max-h-[calc(100vh-160px)] overflow-y-auto ">
                         {results.map((product) => (
                             <Link 
                                 key={product.id}
                                 href={`/detalhes/${product.id}`}
                                 onClick={() => setOpen(false)}
-                                className="py-2 text-gray-600 hover:text-black transition-colors border-b border-gray-50 last:border-0"
+                                className="py-2 text-gray-600 flex gap-3 px-2 items-center hover:text-black  transition-colors border-b border-gray-50 last:border-0"
                             >
+                                <Image 
+                                    src={product.images?.[0]?.url} 
+                                    alt={product.name}
+                                    sizes="48px" 
+                                    width={40} 
+                                    height={40} 
+                                    className="rounded-sm"
+                                />
+
                                 {product.name}
                             </Link>
                         ))}
