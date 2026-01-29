@@ -1,6 +1,15 @@
-import { MapPin, Trash2, ShieldAlert, Plus, Home, ChevronRight } from "lucide-react";
+import { MapPin,  Plus} from "lucide-react";
+import EndereçosCard from "@/components/configuracoes/endereçosCard";
+import { getListAddresses } from "@/lib/actions/address";
+import { auth } from "@/auth";
+import Link from "next/link";
 
-const Conta = () => {
+const Conta = async () => {
+  const session = await auth();
+  
+  const addresses = session ? await getListAddresses(session?.user?.id ?? "") : null;
+
+
   return (
     <div className="max-w-3xl mx-auto space-y-12 pb-20">
       <header className="space-y-2">
@@ -20,51 +29,24 @@ const Conta = () => {
               Endereços de Entrega
             </h2>
           </div>
-          <button className="flex items-center gap-1 text-[10px] font-black uppercase text-[var(--accent)] hover:opacity-70 transition-opacity">
-            <Plus size={14} />
-            Novo Endereço
+          <button className=" text-[10px] font-black uppercase text-[var(--accent)] hover:opacity-70 transition-opacity">
+            <Link href='/configuracoes/conta/endereco' className="h-full w-full flex items-center gap-1">
+              <Plus size={14} />
+              Novo Endereço
+            </Link>
+
           </button>
         </div>
 
-        <div className="grid grid-cols-1 gap-4">
-          <div className="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm flex items-center justify-between group hover:border-[var(--brand-primary)] transition-all">
-            <div className="flex items-center gap-4">
-              <div className="p-3 bg-[var(--brand-soft)] rounded-2xl text-[var(--brand-secondary)]">
-                <Home size={20} />
-              </div>
-              <div className="space-y-0.5">
-                <p className="font-bold text-[var(--text-primary)] text-sm">Principal • Casa</p>
-                <p className="text-xs text-gray-400">Rua das Flores, 123 • São Paulo, SP</p>
-              </div>
-            </div>
-            <button className="p-2 text-gray-300 hover:text-red-400 transition-colors">
-              <Trash2 size={18} />
-            </button>
-          </div>
+        <div className="flex flex-col gap-4 items-center">
+          { addresses && addresses.length > 0? 
+            addresses.map(a=> <EndereçosCard key={a.id} address={a} userId={session?.user?.id ?? ''}/>)
+            : <p className="text-gray-500 text-sm">Não há nenhum endereço de entrega ainda </p>
+          }
         </div>
       </section>
 
-      <section className="space-y-6">
-        <div className="flex items-center gap-3 border-b border-[var(--brand-primary)]/30 pb-2">
-          <ShieldAlert size={18} className="text-[var(--brand-secondary)]" />
-          <h2 className="text-xs font-black uppercase tracking-[0.2em] text-[var(--brand-secondary)]">
-            Privacidade
-          </h2>
-        </div>
-
-        <div className="bg-white rounded-[2.5rem] overflow-hidden border border-gray-100 shadow-sm">
-
-            <button className="w-full p-6 flex items-center justify-between hover:bg-gray-50 transition-colors">
-                <div className="text-left">
-                    <p className="text-sm font-bold text-[var(--text-primary)]">Novidades e Ofertas</p>
-                    <p className="text-[10px] text-gray-400">Gerencie como você recebe nossas promoções.</p>
-                </div>
-                <div className="w-10 h-5 bg-[var(--brand-primary)] rounded-full relative">
-                    <div className="absolute right-1 top-1 w-3 h-3 bg-white rounded-full shadow-sm"></div>
-                </div>
-            </button>
-        </div>
-      </section>
+      
 
       <section className="pt-10">
         <div className="bg-red-50/50 p-8 rounded-[2.5rem] border border-red-100 flex flex-col md:flex-row items-center justify-between gap-6">

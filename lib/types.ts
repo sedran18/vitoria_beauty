@@ -40,3 +40,14 @@ export interface UserMenuProps {
     image?: string | null; 
   } | null;
 }
+
+
+export interface CardAdressType {
+  id: string;
+  street: string;
+  number: string;
+  complement: string | null; 
+  city: string;
+  state: string;
+  isDefault: boolean;
+}

@@ -71,7 +71,7 @@ export default async function LayoutConfiguracoes({
       </section>
 
       <section className="flex-1 pt-2  ">
-        <div className="mx-auto mt-6 ">
+        <div className="mx-auto mt-6 px-3">
           {children}
         </div>
       </section>

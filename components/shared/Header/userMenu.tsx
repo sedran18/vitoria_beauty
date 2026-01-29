@@ -30,7 +30,7 @@ export default function UserMenu({ user }: UserMenuProps) {
       <Button variant="ghost" asChild className="p-2 mx-2 text-stone-700
        hover:text-[#B08982] shadow-sm rounded-sm bg-[var(--brand-primary)]">
         <Link href="/login">
-          <span className="font-bold uppercase tracking-widest text-xs">Log-in</span>
+          <span className="font-bold uppercase tracking-widest text-xs">Login</span>
         </Link>
       </Button>
     )
@@ -42,6 +42,7 @@ export default function UserMenu({ user }: UserMenuProps) {
         <Button
           variant="ghost"
           className="
+            cursor-pointer
             relative
             h-10 w-10
             rounded-full
@@ -56,7 +57,7 @@ export default function UserMenu({ user }: UserMenuProps) {
             focus-visible:ring-offset-2
           "
         >
-          {user ? 
+          {user.image ? 
           <Image src={
             user.image || ''}
             fill 

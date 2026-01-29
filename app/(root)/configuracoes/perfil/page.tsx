@@ -1,4 +1,4 @@
-import UpdateProfileForm from "@/components/configuracoesPerfil/updateProfileForm";
+import UpdateProfileForm from "@/components/configuracoes/updateProfileForm";
 import { auth } from "@/auth";
 
 const PerfilConfiguracao = async  () => {
