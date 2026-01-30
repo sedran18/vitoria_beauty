@@ -4,6 +4,10 @@ import { Button } from "@/components/ui/button";
 import { ShoppingBag, Star, ShieldCheck } from "lucide-react";
 import { formatBRL } from "@/lib/utils";
 import ProdutoImagens from "@/components/detalhes/produtosImages";
+import RatingInput from "@/components/detalhes/ratingInput";
+import Ratings from "@/components/detalhes/ratings";
+import { auth } from "@/auth";
+import Link from "next/link";
 
 export default async function DetalhesPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
@@ -11,6 +15,8 @@ export default async function DetalhesPage({ params }: { params: Promise<{ id: s
 
     if (!product) return notFound();
 
+    const session = await auth();
+    
     return (
         <main className="max-w-7xl mx-auto px-6 py-12 md:py-24 animate-in fade-in duration-700">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
@@ -70,6 +76,57 @@ export default async function DetalhesPage({ params }: { params: Promise<{ id: s
                 </div>
 
             </div>
+
+            <section className="max-w-5xl mx-auto py-10 px-4">
+                <div className="space-y-12">
+                    <div className="space-y-4">
+                    <h3 className="text-xs font-black uppercase tracking-[0.3em] text-center text-gray-400">
+                        Sua Opinião
+                    </h3>
+                    {session ? (
+                        <RatingInput  userId={session?.user?.id ?? ''} productId={product.id} />
+                        ) : (
+                            <div 
+                            className="
+                            relative 
+                            overflow-hidden 
+                            p-7 rounded-[2.5rem] border-2 
+                            border-dashed border-gray-100 
+                            bg-white text-center space-y-4">
+                                <div className="space-y-2">
+                                <p className="text-sm font-black uppercase tracking-[0.2em] text-[var(--brand-secondary)]">
+                                    Sua opinião importa
+                                </p>
+                                <p className="text-xs text-gray-500 font-medium max-w-[200px] mx-auto leading-relaxed">
+                                    Para avaliar este produto, você precisa estar logado.
+                                </p>
+                                </div>
+
+                                <Link 
+                                href="/login" 
+                                className="inline-block px-8 py-3
+                                bg-[var(--brand-secondary)] border border-gray-200
+                                text-[10px] font-black uppercase
+                                tracking-widest rounded-xl 
+                                hover:bg-[var(--accent)] 
+                                text-white hover:border-[var(--brand-primary)] 
+                                transition-all shadow-sm active:scale-95"
+                                >
+                                Fazer Login
+                                </Link>
+
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="space-y-6">
+                    <h3 className="text-xs font-black uppercase tracking-[0.3em] text-gray-400 px-4">
+                        Avaliações da Comunidade
+                    </h3>
+                    <Ratings ratings={product.ratings} />
+                    </div>
+                </div>
+            </section>
         </main>
     );
 }

@@ -1,3 +1,4 @@
+import { inter } from "./fonts";
 import { filtros } from "./utils";
 import { Decimal } from "@prisma/client/runtime/library";
 
@@ -41,13 +42,3 @@ export interface UserMenuProps {
   } | null;
 }
 
-
-export interface CardAdressType {
-  id: string;
-  street: string;
-  number: string;
-  complement: string | null; 
-  city: string;
-  state: string;
-  isDefault: boolean;
-}

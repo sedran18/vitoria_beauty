@@ -106,14 +106,30 @@ const getProductById = async (id: string) => {
             id
         }, 
         include: {
-            images: true
+            images: true,
+            ratings: {
+                include: {
+                    user: {
+                        select: {
+                            id: true, 
+                            name: true, 
+                            image: true
+                        }
+                    }
+                },
+                orderBy: {
+                    createdAt:  'desc'
+                }
+            }
         }
     });
+
     const produtoSerializado = produto ? {
         ...produto,
         price: Number(produto.price),
         ratingAvg: produto.ratingAvg ? Number(produto.ratingAvg) : 0,
     } : null
+
     return produtoSerializado;
 }
 
