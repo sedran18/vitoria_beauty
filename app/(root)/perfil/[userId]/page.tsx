@@ -11,6 +11,10 @@ const Perfis = async ({ params }: { params: Promise<{ userId: string }> }) => {
   const user = await getUserById(userId);
   const ratings = await getRatingsFromUser(user?.id ?? '');
 
+  if (!userId) {
+    return <div>Usuário não encontrado</div>
+  }
+  
   return (
     <div className="max-w-4xl mt-7  mx-auto space-y-8">
       <div className="bg-white rounded-[2.5rem] p-8 shadow-sm border border-[var(--brand-primary)]/30 flex flex-col md:flex-row items-center gap-6">

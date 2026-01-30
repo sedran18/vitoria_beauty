@@ -51,8 +51,9 @@ const Ratings = ({ ratings, userId }: { ratings: RatingWithUser[], userId: strin
                     <span className="text-sm font-black text-gray-900 leading-none">
                       <Link href={r.user?.id === userId ? 
                       '/perfil'
-                      : 
-                      `/perfil/${r.user?.id}`
+                      : r.user?.id ?
+                      `/perfil/${r.user?.id}` :
+                      ''
                       } >
                         {r.user?.name || "Usuário excluído"}
                       </Link>
