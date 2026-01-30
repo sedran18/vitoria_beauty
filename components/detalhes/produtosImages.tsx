@@ -1,7 +1,6 @@
 'use client';
 
 import Image from "next/image";
-import { Heart } from "lucide-react";
 import { ProdutosType } from "@/lib/types";
 import { useState } from "react";
 
@@ -18,9 +17,6 @@ const ProdutoImagens = ({product}: {product: ProdutosType}) => {
                             className="object-cover hover:scale-105 transition-transform duration-700"
                             priority
                         />
-                        <button className="absolute top-4 right-4 p-3 bg-white/80 backdrop-blur-sm rounded-full shadow-sm hover:bg-white transition-colors">
-                            <Heart className="w-5 h-5 text-gray-600" />
-                        </button>
                     </div>
                     
                     <div className="flex h-15 gap-4">

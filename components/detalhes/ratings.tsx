@@ -1,6 +1,7 @@
 import Stars from "@/components/ui/stars"; 
 import Image from "next/image";
 import { User } from "lucide-react";
+import Link from "next/link";
 
 interface RatingWithUser {
   id: string;
@@ -13,7 +14,7 @@ interface RatingWithUser {
   } | null;
 }
 
-const Ratings = ({ ratings }: { ratings: RatingWithUser[] }) => {
+const Ratings = ({ ratings, userId }: { ratings: RatingWithUser[], userId: string}) => {
   return (
     <div className="space-y-6 mt-8">
       {ratings && ratings.length > 0 ? (
@@ -48,7 +49,13 @@ const Ratings = ({ ratings }: { ratings: RatingWithUser[] }) => {
                   
                   <div className="flex flex-col">
                     <span className="text-sm font-black text-gray-900 leading-none">
-                      {r.user?.name || "Usuário excluído"}
+                      <Link href={r.user?.id === userId ? 
+                      '/perfil'
+                      : 
+                      `/perfil/${r.user?.id}`
+                      } >
+                        {r.user?.name || "Usuário excluído"}
+                      </Link>
                     </span>
                     <span className="text-[10px] text-gray-400 uppercase font-bold tracking-wider mt-1">
                       {new Date(r.createdAt).toLocaleDateString('pt-BR', {

@@ -56,23 +56,51 @@ const Perfil = async () => {
           </div>
         ) : (
           <div className="grid gap-4">
-            {ratings.map((r) => (
-              <div 
-                key={r.id} 
-                className="bg-white p-6 rounded-2xl border border-gray-100 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:shadow-md transition-shadow"
-              >
-                <div className="space-y-1">
-                  <Stars rating={r.value} />
-                  <h4 className="font-bold text-[var(--text-primary)] text-lg">
-                    {r.product.name}
-                  </h4>
-                </div>
-                
-                <span className="text-[10px] font-bold text-gray-400 uppercase bg-gray-50 px-3 py-1 rounded-full w-fit">
-                  {new Date(r.createdAt).toLocaleDateString('pt-BR')}
-                </span>
-              </div>
-            ))}
+            {ratings.length === 0 ? (
+  <div className="bg-gray-50/50 border-2 border-dashed border-gray-100 rounded-[2.5rem] p-16 text-center">
+    <div className="inline-flex p-4 bg-white rounded-full shadow-sm mb-4">
+      <Stars rating={0} cor="#E5E7EB" />
+    </div>
+    <p className="text-gray-400 font-bold uppercase tracking-widest text-[10px]">
+      Você ainda não avaliou nenhum produto
+    </p>
+  </div>
+) : (
+  <div className="grid gap-6">
+    {ratings.map((r) => (
+      <Link
+        key={r.id}
+        href={`/detalhes/${r.product.id}`}
+        className="group relative bg-white mx-2 p-5 rounded-[2rem] border border-gray-100 flex items-center gap-6 hover:border-[var(--brand-primary)]/20 hover:shadow-xl hover:shadow-gray-200/40 transition-all duration-500"
+      >
+        <div className="flex-1 space-y-2">
+          <div className="flex items-center justify-between">
+            <Stars rating={r.value} size={16}  />
+            <span className="text-[9px] font-black text-gray-300 uppercase tracking-[0.2em]">
+              {new Date(r.createdAt).toLocaleDateString('pt-BR')}
+            </span>
+          </div>
+          
+          <div>
+            <h4 className="font-black text-[var(--text-primary)] text-md leading-tight group-hover:text-[var(--brand-primary)] transition-colors">
+              {r.product.name}
+            </h4>
+            <p className="text-[10px] text-gray-400 uppercase font-bold tracking-wider mt-1">
+              Sua avaliação
+            </p>
+          </div>
+        </div>
+
+        <div className="pr-2 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[var(--brand-primary)]">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M9 18l6-6-6-6"/>
+          </svg>
+        </div>
+      </Link>
+    ))}
+  </div>
+)}
+
           </div>
         )}
       </section>

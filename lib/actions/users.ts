@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import { supabaseAdmin } from "../supabase";
 import { revalidatePath } from 'next/cache';
 import {signOut} from '@/auth';
+
 export const getRatingsFromUser = async (id:string) => {
     const user  = await prisma.user.findUnique({
         where: {
@@ -161,3 +162,17 @@ export const deleteUser = async (userId: string, formData: FormData) => {
   }
     await signOut({ redirectTo: "/login" });
 };
+
+export const getUserById = async (userId: string) => {
+    try {
+        const user = await prisma.user.findUnique({
+            where: {
+                id: userId
+            }
+        });
+
+        return user;
+    } catch (err) {
+        console.error(err)
+    }
+}

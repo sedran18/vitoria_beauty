@@ -123,7 +123,7 @@ export default async function DetalhesPage({ params }: { params: Promise<{ id: s
                     <h3 className="text-xs font-black uppercase tracking-[0.3em] text-gray-400 px-4">
                         Avaliações da Comunidade
                     </h3>
-                    <Ratings ratings={product.ratings} />
+                    <Ratings ratings={product.ratings} userId={session?.user?.id ?? ''}/>
                     </div>
                 </div>
             </section>
