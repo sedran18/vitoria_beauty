@@ -69,3 +69,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   session: { strategy: "jwt" },
 })
+
+
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
