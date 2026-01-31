@@ -3,7 +3,7 @@ import prisma from "../prisma";
 import bcrypt from "bcryptjs";
 import { supabaseAdmin } from "../supabase";
 import { revalidatePath } from 'next/cache';
-import {signOut, signIn} from '@/auth';
+import {signOut} from '@/auth';
 
 export const getRatingsFromUser = async (id:string) => {
     const user  = await prisma.user.findUnique({
@@ -133,8 +133,6 @@ export const handleUpdateUserProfile = async (formData: FormData, userId: string
         });
 
         if (success) {
-            await signOut();
-            await signIn();
             revalidatePath('/', 'layout'); 
         }
 
