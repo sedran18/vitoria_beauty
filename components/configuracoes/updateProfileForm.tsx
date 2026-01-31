@@ -1,4 +1,6 @@
 'use client';
+export const dynamic = 'force-dynamic';
+
 import { Camera, User, Lock, Sparkles, Eye, EyeOff, AlertCircle, Check} from "lucide-react";
 import { handleUpdateUserProfile } from "@/lib/actions/users";
 import { useState, useEffect} from "react";
@@ -58,7 +60,7 @@ const UpdateProfileForm = ({user}: UserMenuProps) => {
                 
                 setSuccess(true);
                 setTimeout(() => {
-                window.location.href = '/configuracoes/perfil';
+                window.location.href = `/configuracoes/perfil?v=${new Date().getTime()}`;
 
                 }, 3000)
             } else {
