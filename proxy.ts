@@ -14,7 +14,7 @@ export default  auth((req) => {
     const isAuthRoute = ["/login", "/cadastro"].includes(nextUrl.pathname);
 
     let response = NextResponse.next();
-
+ 
     if (isApiAuthRoute) return response;
     
     if (isAuthRoute) {

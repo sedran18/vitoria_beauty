@@ -5,6 +5,7 @@ import { useState, useEffect} from "react";
 import { type UserMenuProps } from "@/lib/types";
 import Image from "next/image";
 import { Spinner } from "@/components/ui/spinner";
+import { useSession } from "next-auth/react";
 
 const UpdateProfileForm = ({user}: UserMenuProps) => {
     const [formData, setFormData] = useState({
@@ -18,7 +19,7 @@ const UpdateProfileForm = ({user}: UserMenuProps) => {
     const [preview, setPreview] = useState<string | null>();
     const [loading, setIsLoading] = useState(false);
     const [success,setSuccess] =  useState(false);
-
+    const { data: session, update } = useSession();
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
@@ -47,6 +48,14 @@ const UpdateProfileForm = ({user}: UserMenuProps) => {
             const success = await handleUpdateUserProfile(data, user?.id ?? '');
             
             if (success) {
+                await update({
+                  user: {
+                    name: formData.name,
+                    image: preview ?? session?.user?.image,
+                  }
+                });
+
+                
                 setSuccess(true);
                 setTimeout(() => {
                 window.location.href = '/configuracoes/perfil';

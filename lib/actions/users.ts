@@ -153,7 +153,8 @@ export const deleteUser = async (userId: string, formData: FormData) => {
 
     const isValid = await bcrypt.compare(password, user.password);
     if (!isValid) return { success: false, error: "Senha incorreta" };
-
+    
+    await deleteProfileImage(userId); 
     await prisma.user.delete({ where: { id: userId } });
 
   } catch (err) {

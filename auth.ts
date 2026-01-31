@@ -48,28 +48,21 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.sub = user.id
       }
       
-      if (trigger === "update" && session) {
-        return { ...token, ...session.user }
-      }
+      if (trigger === "update" && session?.user) {
+        token.name = session.user.name
+        token.picture = session.user.image
+  }
       
       return token
     },
     async session({ session, token }) {
-      if (session.user && token.sub) {
-        session.user.id = token.sub
-
-        const dbUser = await prisma.user.findUnique({
-          where: { id: token.sub },
-          select: { name: true, image: true }
-        })
-
-        if (dbUser) {
-          session.user.name = dbUser.name
-          session.user.image = dbUser.image
-        }
+      if (session.user) {
+        session.user.id = token.sub as string
+        session.user.name = token.name as string
+        session.user.image = token.picture as string
       }
-      return session
-    },
+  return session
+}
   },
   pages: {
     signIn: "/login",

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import {inter} from '@/lib/fonts';
 import {APP_NAME, APP_DESCRIPTION} from '@/lib/constants';
-
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: APP_NAME,
@@ -19,7 +19,9 @@ export default function RootLayout({
       <body
         className={`${inter.className}`}
       >
+        < SessionProvider>
           {children}
+        </SessionProvider>
       </body>
     </html>
   );
