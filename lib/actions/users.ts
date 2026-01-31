@@ -3,7 +3,7 @@ import prisma from "../prisma";
 import bcrypt from "bcryptjs";
 import { supabaseAdmin } from "../supabase";
 import { revalidatePath } from 'next/cache';
-import {signOut} from '@/auth';
+import {signOut, signIn, auth} from '@/auth';
 
 export const getRatingsFromUser = async (id:string) => {
     const user  = await prisma.user.findUnique({
@@ -176,4 +176,23 @@ export const getUserById = async (userId: string) => {
     } catch (err) {
         console.error(err)
     }
+}
+
+export const compararSenhas = async (password: string) => {
+    const session = await auth();
+    const userId = session?.user?.id;
+
+
+    try {
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    
+    if (!user || !user.password) return { success: false, error: "Usuário não encontrado" };
+
+    const isValid = await bcrypt.compare(password, user.password);
+    if (!isValid) return { success: false, error: "Senha incorreta" };
+    return { success: true, error: null}
+  } catch (err) {
+    console.error(err);
+    return { success: false, error: "Erro ao deletar conta" };
+  }
 }

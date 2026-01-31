@@ -2,12 +2,13 @@
 export const dynamic = 'force-dynamic';
 
 import { Camera, User, Lock, Sparkles, Eye, EyeOff, AlertCircle, Check} from "lucide-react";
-import { handleUpdateUserProfile } from "@/lib/actions/users";
+import { compararSenhas, handleUpdateUserProfile } from "@/lib/actions/users";
 import { useState, useEffect} from "react";
 import { type UserMenuProps } from "@/lib/types";
 import Image from "next/image";
 import { Spinner } from "@/components/ui/spinner";
 import { useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
 const UpdateProfileForm = ({user}: UserMenuProps) => {
     const [formData, setFormData] = useState({
@@ -26,6 +27,14 @@ const UpdateProfileForm = ({user}: UserMenuProps) => {
         e.preventDefault();
         setError('');
         setIsLoading(true);
+        const senha = prompt('Digite sua senha para prosseguir');
+        const isSenhaValida = await compararSenhas(senha ?? '');
+        
+        if (!isSenhaValida.success) {
+            setError('Senha inválida');
+            setIsLoading(false);
+            return;
+        }
 
         if (formData.password1) {
             if (formData.password1.length < 8) {
@@ -56,11 +65,16 @@ const UpdateProfileForm = ({user}: UserMenuProps) => {
                     image: preview ?? session?.user?.image,
                   }
                 });
-
                 
+                await signIn("credentials", {
+                  email: user?.email ?? '', 
+                  password: senha, 
+                  redirect: false, 
+              });
+
                 setSuccess(true);
                 setTimeout(() => {
-                window.location.href = `/configuracoes/perfil?v=${new Date().getTime()}`;
+                window.location.href = `/configuracoes/perfil`;
 
                 }, 3000)
             } else {
