@@ -131,23 +131,6 @@ export const removerItem = async (itemId: string) => {
   }
 }
 
-export const cleanCart = async () => {
-  const session = await auth();
-  if (!session?.user) return;
-
-  await prisma.cartItem.deleteMany({
-    where: {
-      cart: {
-        userId: session.user.id
-      }
-    }
-  });
-  
-  revalidatePath('/');
-  revalidatePath('/carrinho');
-}
-
-
 
 export const countCartItems = async () => {
   const session = await auth();

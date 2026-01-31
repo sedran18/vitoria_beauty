@@ -31,6 +31,7 @@ model Product {
   ratingAvg    Decimal? @db.Decimal(3, 2) @default(0)
   ratingCount   Int?      @default(0)
   
+  orderItems    OrderItem[]
   carts        CartItem[]
   salesCount    Int @default(0)
   ratings       Rating[]
@@ -111,4 +112,29 @@ model CartItem {
 
   createdAt     DateTime @default(now()) @db.Timestamptz(6)
   @@unique([cartId, productId])
+}
+
+
+
+
+model Order {
+  id          String  @id @default(uuid()) @db.Uuid
+  userId      String  @db.Uuid 
+  total       Decimal @db.Decimal(10, 2)
+  status      String      @default("PENDING") // PENDING, PAID, CANCELED
+  createdAt   DateTime    @default(now())
+  orderItems  OrderItem[]
+}
+
+model OrderItem {
+  id        String  @id @default(uuid()) @db.Uuid
+  orderId   String  @db.Uuid                      
+  productId String  @db.Uuid
+
+  quantity  Int
+  price     Decimal @db.Decimal(10, 2)
+
+  order     Order   @relation(fields: [orderId], references: [id])
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
 }

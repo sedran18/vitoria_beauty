@@ -7,6 +7,7 @@ import {
   Settings, 
   LogOut, 
   UserCircle,
+  ShoppingBasket
 } from "lucide-react"
 
 import {
@@ -85,6 +86,13 @@ export default function UserMenu({ user }: UserMenuProps) {
           <Link href="/perfil" className="flex w-full items-center p-2">
             <UserCircle className="mr-3" size={18} />
             <span className="text-sm font-medium">Meu Perfil</span>
+          </Link>
+        </DropdownMenuItem>
+
+          <DropdownMenuItem asChild className="cursor-pointer rounded-lg focus:bg-[#C7A39D]/10 focus:text-[#C7A39D] transition-colors">
+          <Link href="/compras" className="flex w-full items-center p-2">
+            <ShoppingBasket className="mr-3" size={18} />
+            <span className="text-sm font-medium">Minhas Compras</span>
           </Link>
         </DropdownMenuItem>
 

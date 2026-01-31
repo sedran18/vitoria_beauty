@@ -18,6 +18,7 @@ export default function ProdutoCard({
   ratingCount,
   name,
   price,
+  stock
 }: Omit<ProdutosType, 'description'>) {
   const [currentImg, setCurrentImg] = useState(0);
   const [added, setAdded] = useState(false);
@@ -26,6 +27,7 @@ export default function ProdutoCard({
   const hasSecondImage = images.length > 1;
   
  const handleClick = async () => {
+  if (stock <= 0) return;
     try {
         await addToCart(id);
         setAdded(true);
@@ -54,7 +56,7 @@ export default function ProdutoCard({
       <CardFooter className="flex  flex-col gap-3 p-2 pt-2">
         <div className="flex items-center gap-2 justify-between w-full flex-wrap">
           <div className="flex items-center gap-1 ">
-            <Stars rating={Number(ratingAvg)} cor="#393939" size={14} />
+            <Stars rating={Number(ratingAvg)}  size={14} />
             <span className="text-[10px] text-muted-foreground">({ratingCount})</span>
           </div>
           <span className="font-bold text-sm">{formatBRL(price)}</span>
@@ -71,6 +73,11 @@ export default function ProdutoCard({
           onClick={handleClick}
         >
            {
+            stock <= 0 ?
+            <>
+              Estoque vazio
+            </>
+            :
         added ?  
         <>
           <Check className="w-4 h-4 mr-2"/>

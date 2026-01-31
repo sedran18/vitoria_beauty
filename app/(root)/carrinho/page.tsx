@@ -2,11 +2,13 @@ import ProdutoCart from "@/components/carrinho/produtoCart";
 import PedidoResumo from "@/components/carrinho/pedidoResumo";
 import { getItemsFromCart } from "@/lib/actions/cart";
 import { auth } from "@/auth";
+import { getDefautlAddress } from "@/lib/actions/address";
 
 const Carrinho = async () => {
     const session = await auth();
     const cart = await getItemsFromCart(session?.user?.id ?? '');
     const items = cart?.items;
+    const address = await getDefautlAddress();
 
     const valorTotal = items?.reduce((acc, item) => {
         return acc + ( Number(item.product.price )* item.quantity)
@@ -40,7 +42,7 @@ const Carrinho = async () => {
                     )}
                 </section>
 
-                <PedidoResumo valorTotal={valorTotal ?? 0} user={!!session?.user}/>
+                <PedidoResumo address={address} valorTotal={valorTotal ?? 0} user={!!session?.user}/>
             </div>
         </main>
     );

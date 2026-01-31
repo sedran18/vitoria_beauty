@@ -53,7 +53,7 @@ export default async function DetalhesPage({ params }: { params: Promise<{ id: s
                         </p>
 
                         <div className="space-y-4">
-                            <AddToCartBtn productId={product.id}/>
+                            <AddToCartBtn productId={product.id} stock={product.stock}/>
                         </div>
                     </div>
 
@@ -66,7 +66,7 @@ export default async function DetalhesPage({ params }: { params: Promise<{ id: s
                             <div className="w-5 h-5 flex items-center justify-center">
                                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
                             </div>
-                            <span>{product.stock > 0 ? `Disponível para envio imediato` : "Produto sob encomenda"}</span>
+                            <span>{product.stock > 0 ? `Disponível para envio imediato (${product.stock})` : "Produto sob encomenda"}</span>
                         </div>
                     </div>
                 </div>

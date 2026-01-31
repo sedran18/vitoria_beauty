@@ -1,15 +1,21 @@
 'use client'
 import { formatBRL } from "@/lib/utils";
-import { cleanCart } from "@/lib/actions/cart";
 import { useRouter } from "next/navigation";
+import { createOrder } from "@/lib/actions/order";
+import {type  Address } from "@prisma/client";
 
-const PedidoResumo = ({valorTotal, user}:{valorTotal:  number, user: boolean}) => {
+const PedidoResumo = ({valorTotal, user, address}:{valorTotal:  number, user: boolean, address: Address | null}) => {
     const router = useRouter();
-
     const handleClick = async () => {
-        if (!user) return router.push('/login') 
-        await cleanCart();
-        alert('Pedido comprado com sucesso')
+        if (!user) return router.push('/login');
+        if(!address) {
+            alert('Adicione um endereço primeiro');
+            router.push('/configuracoes/conta');
+            return;
+        }
+        await createOrder();
+        alert('Pedido comprado com sucesso');
+        router.push('/compras');
     }
   return (
  <section className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 h-fit sticky top-6">
@@ -36,7 +42,14 @@ const PedidoResumo = ({valorTotal, user}:{valorTotal:  number, user: boolean}) =
                      text-white font-bold py-4 rounded-xl transition-colors
                      " 
                      onClick={handleClick}>
-                        Finalizar Compra
+                        {
+                            !user ?
+                            <>Fazer Login</>
+                            :
+                            <>
+                             Finalizar Compra
+                            </>
+                        }
                     </button>
     </section>
   )

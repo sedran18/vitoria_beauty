@@ -1,4 +1,5 @@
 'use server';
+import { auth } from "@/auth";
 import prisma from "../prisma";
 import { revalidatePath } from "next/cache";
 
@@ -103,3 +104,26 @@ export const deleteAddress = async ({ addressId, userId }: { addressId: string, 
     return { success: false, error: "Falha ao remover o endereço." };
   }
 };
+
+export const getDefautlAddress = async () => {
+  
+  try {
+    const session = await auth();
+    const userId = session?.user?.id;
+
+    if (!userId) return null;
+
+    const address = await prisma.address.findFirst(
+      {
+        where: {
+          userId,
+          isDefault: true
+        }
+      }
+    );
+      return address;
+  } catch (error) {
+    console.error("Erro ao buscar endereço padrão:", error);
+    return null;
+  } 
+}
