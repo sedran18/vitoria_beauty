@@ -3,7 +3,7 @@ import prisma from "../prisma";
 import bcrypt from "bcryptjs";
 import { supabaseAdmin } from "../supabase";
 import { revalidatePath } from 'next/cache';
-import {signOut, signIn, auth} from '@/auth';
+import {signOut,  auth} from '@/auth';
 
 export const getRatingsFromUser = async (id:string) => {
     const user  = await prisma.user.findUnique({
