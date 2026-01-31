@@ -11,7 +11,6 @@ import { type ProdutosType } from "@/lib/types";
 import { addToCart } from "@/lib/actions/cart";
 import { Check } from "lucide-react";
 
-
 export default function ProdutoCard({
   id,
   images = [],
@@ -21,14 +20,19 @@ export default function ProdutoCard({
   price,
 }: Omit<ProdutosType, 'description'>) {
   const [currentImg, setCurrentImg] = useState(0);
-   const [added, setAdded] = useState(false);
+  const [added, setAdded] = useState(false);
+
 
   const hasSecondImage = images.length > 1;
-
-  const handleClick = async () => {
-    await addToCart(id);
-    setAdded(true);
-  }
+  
+ const handleClick = async () => {
+    try {
+        await addToCart(id);
+        setAdded(true);
+    } catch (error) {
+        console.error("Erro ao adicionar:", error);
+    }
+}
 
 
   return (

@@ -5,7 +5,6 @@ import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
 
-
 export async function addToCart(productId: string) {
   try {
     const session = await auth();
@@ -48,9 +47,8 @@ export async function addToCart(productId: string) {
       },
     });
 
-    revalidatePath('/'); 
+    revalidatePath('/', 'layout'); 
     revalidatePath('/carrinho');
-    
   } catch (error) {
     console.error("ERRO AO ADICIONAR ITEM:", error);
     return { success: false };
@@ -126,7 +124,7 @@ export const removerItem = async (itemId: string) => {
     await prisma.cartItem.delete({
         where: { id: itemId }
     });
-    revalidatePath('/')
+    revalidatePath('/');
     revalidatePath('/carrinho')
   } catch (err) {
     console.error(err)
@@ -145,5 +143,35 @@ export const cleanCart = async () => {
     }
   });
   
+  revalidatePath('/');
   revalidatePath('/carrinho');
+}
+
+
+
+export const countCartItems = async () => {
+  const session = await auth();
+  const cookieStore = await cookies();
+  const cartIdFromCookie = cookieStore.get('vitoria-cart-id')?.value;
+  const userId = session?.user?.id;
+
+  try {
+    const whereClause = userId 
+      ? { cart: { userId: userId } } 
+      : { cartId: cartIdFromCookie };
+
+    if (!userId && !cartIdFromCookie) return 0;
+
+    const result = await prisma.cartItem.aggregate({
+      where: whereClause,
+      _sum: {
+        quantity: true
+      }
+    });
+
+    return result._sum.quantity || 0;
+  } catch (error) {
+    console.error("Erro ao contar itens do carrinho:", error);
+    return 0;
+  }
 }

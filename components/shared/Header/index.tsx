@@ -3,14 +3,13 @@ import { type UserMenuProps } from "@/lib/types";
 import Logo from "@/components/shared/logo";
 import Link from "next/link";
 import Menu from "./menu";
-import { ShoppingBag} from 'lucide-react';
 import PromoHeader from "./promo_header";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import SearchBar from "./SearchBar";
 import UserMenu from "./userMenu";
 
-export default function Header({user} : UserMenuProps) {
+export default  function Header({ user, cartCounter }: UserMenuProps & { cartCounter: React.ReactNode }) {
     const [isHero, setIsHero] = useState(true);
 
   useEffect(() => {
@@ -21,6 +20,7 @@ export default function Header({user} : UserMenuProps) {
         window.addEventListener("scroll", onScroll);
         return () => window.removeEventListener("scroll", onScroll);
     }, []);
+
 
     return (
         <header>
@@ -51,9 +51,7 @@ export default function Header({user} : UserMenuProps) {
 
                 <div className="h-full w-auto flex items-center justify-end gap-3 md:gap-8 px-1">
                     <SearchBar  isMobile={false}/>
-                    <Link href={'/carrinho'}>
-                        <ShoppingBag size={20}/>
-                    </Link>
+                    {cartCounter}
                     <UserMenu user={user} />
                 </div>
             </div>
