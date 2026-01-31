@@ -1,7 +1,8 @@
 import { auth } from "@/auth"
 import { NextResponse } from "next/server"
+import { cartMiddleware } from "./middlewares/cart";
 
-export default auth((req) => {
+export default  auth((req) => {
     const { nextUrl } = req;
     const isLoggedIn = !!req.auth; 
 
@@ -12,20 +13,32 @@ export default auth((req) => {
 
     const isAuthRoute = ["/login", "/cadastro"].includes(nextUrl.pathname);
 
-    if (isApiAuthRoute) return NextResponse.next();
+    let response = NextResponse.next();
 
+    if (isApiAuthRoute) return response;
+    
     if (isAuthRoute) {
         if (isLoggedIn) {
-        return NextResponse.redirect(new URL("/", nextUrl));
+        response = NextResponse.redirect(new URL("/", nextUrl));
         }
-        return NextResponse.next();
     }
 
   if (isPrivateRoute && !isLoggedIn) {
-    return NextResponse.redirect(new URL("/login", nextUrl));
+    response = NextResponse.redirect(new URL("/login", nextUrl));
   }
 
-  return NextResponse.next();
+  if (!isLoggedIn) {
+    response = cartMiddleware(req, response);
+  } else {
+    const cartIdFromCookie = req.cookies.get('vitoria-cart-id')?.value;
+    if(cartIdFromCookie) {
+      response.cookies.delete('vitoria-cart-id')
+
+    }
+  }
+  
+
+  return response;
 })
 
 export const config = {

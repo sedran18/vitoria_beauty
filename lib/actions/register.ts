@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
 import { RegisterFormType} from "../types";
+import { cookies } from "next/headers";
 
 export async function registerAction({name, email, password, confirmPassword} : RegisterFormType) {
 
@@ -28,13 +29,28 @@ export async function registerAction({name, email, password, confirmPassword} : 
 
     const hashedPassword = await bcrypt.hash(password, 10)
 
-    await prisma.user.create({
+    const user = await prisma.user.create({
       data: {
         name,
         email,
         password: hashedPassword
       }
     })
+
+    const cookieStore = await cookies();
+    const cartIdFromCookie = cookieStore.get('vitoria-cart-id')?.value;
+
+    if (cartIdFromCookie) {
+      await prisma.cart.upsert({
+        where: { id: cartIdFromCookie },
+        update: { userId: user.id },
+        create: { 
+          id: cartIdFromCookie, 
+          userId: user.id 
+        },
+      });
+    }
+    
   } catch (error) {
     console.log(error)
     return { sucess: false, error: "Erro ao criar conta. Tente novamente. "}

@@ -8,6 +8,7 @@ import RatingInput from "@/components/detalhes/ratingInput";
 import Ratings from "@/components/detalhes/ratings";
 import { auth } from "@/auth";
 import Link from "next/link";
+import AddToCartBtn from "@/components/detalhes/addToCartBtn";
 
 export default async function DetalhesPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
@@ -52,12 +53,7 @@ export default async function DetalhesPage({ params }: { params: Promise<{ id: s
                         </p>
 
                         <div className="space-y-4">
-                            <Button className="w-full cursor-pointer py-8 text-sm uppercase tracking-widest bg-black text-white hover:bg-zinc-800 rounded-full transition-all shadow-xl shadow-black/5">
-                                <ShoppingBag className="w-4 h-4 mr-2" />
-                                Adicionar ao Carrinho
-                            </Button>
-                            
-
+                            <AddToCartBtn productId={product.id}/>
                         </div>
                     </div>
 

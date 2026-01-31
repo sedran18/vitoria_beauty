@@ -8,8 +8,8 @@ import { Button } from "@/components/ui/button";
 import Stars from '@/components/ui/stars';
 import { formatBRL } from "@/lib/utils";
 import { type ProdutosType } from "@/lib/types";
-;
-
+import { addToCart } from "@/lib/actions/cart";
+import { Check } from "lucide-react";
 
 
 export default function ProdutoCard({
@@ -21,7 +21,15 @@ export default function ProdutoCard({
   price,
 }: Omit<ProdutosType, 'description'>) {
   const [currentImg, setCurrentImg] = useState(0);
+   const [added, setAdded] = useState(false);
+
   const hasSecondImage = images.length > 1;
+
+  const handleClick = async () => {
+    await addToCart(id);
+    setAdded(true);
+  }
+
 
   return (
     <Card className="group flex h-full flex-col gap-1 overflow-hidden border-none bg-white p-0 shadow-none transition-all hover:shadow-sm justify-between">
@@ -56,11 +64,19 @@ export default function ProdutoCard({
 
         <Button 
           className="w-full bg-[#333] hover:bg-black text-white py-5 h-auto rounded-md transition-colors text-xs lg:text-sm"
-          onClick={(e) => {
-            e.preventDefault();
-          }}
+          onClick={handleClick}
         >
+           {
+        added ?  
+        <>
+          <Check className="w-4 h-4 mr-2"/>
+          Adicionado
+        </>
+        :
+        <>
           Adicionar ao Carrinho
+        </>
+      }
         </Button>
       </CardFooter>
     </Card>

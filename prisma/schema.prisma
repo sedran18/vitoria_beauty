@@ -15,6 +15,7 @@ model User {
   image     String?   @map("avatar_url")
   ratings   Rating[]
 
+  cart      Cart[]
   addresses Address[]
   createdAt DateTime @default(now()) @db.Timestamptz(6)
   updatedAt DateTime @updatedAt @db.Timestamptz(6)
@@ -30,6 +31,7 @@ model Product {
   ratingAvg    Decimal? @db.Decimal(3, 2) @default(0)
   ratingCount   Int?      @default(0)
   
+  carts        CartItem[]
   salesCount    Int @default(0)
   ratings       Rating[]
   images      ProductImage[]
@@ -79,4 +81,34 @@ model Address {
 
   createdAt     DateTime @default(now()) @db.Timestamptz(6)
   updatedAt     DateTime @updatedAt      @db.Timestamptz(6)
+}
+
+
+
+
+model Cart {
+  id        String     @id @default(uuid()) @db.Uuid
+  
+  userId    String?    @unique @db.Uuid 
+  user      User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  items     CartItem[]
+  
+  createdAt DateTime   @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime   @updatedAt      @db.Timestamptz(6)
+}
+
+model CartItem {
+  id        String  @id @default(uuid()) @db.Uuid
+  
+  cartId    String  @db.Uuid
+  cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  
+  productId String  @db.Uuid
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  
+  quantity  Int     @default(1)
+
+  createdAt     DateTime @default(now()) @db.Timestamptz(6)
+  @@unique([cartId, productId])
 }

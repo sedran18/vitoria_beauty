@@ -1,10 +1,16 @@
-import { getProducts } from "@/lib/actions/products";
 import ProdutoCart from "@/components/carrinho/produtoCart";
 import PedidoResumo from "@/components/carrinho/pedidoResumo";
+import { getItemsFromCart } from "@/lib/actions/cart";
+import { auth } from "@/auth";
 
 const Carrinho = async () => {
-    const res = await getProducts(7);
-    const testeProdutos = res.data;
+    const session = await auth();
+    const cart = await getItemsFromCart(session?.user?.id ?? '');
+    const items = cart?.items;
+
+    const valorTotal = items?.reduce((acc, item) => {
+        return acc + ( Number(item.product.price )* item.quantity)
+    }, 0);
 
     return (
         <main className="max-w-7xl mx-auto p-6 md:p-10">
@@ -15,14 +21,16 @@ const Carrinho = async () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
                 
                 <section className="lg:col-span-2">
-                    {testeProdutos && testeProdutos.length > 0 ? (
-                        testeProdutos.map((p) => (
+                    {items && items.length > 0 ? (
+                        items.map((p) => (
                             <ProdutoCart 
                                 key={p.id} 
-                                productId={p.id}  
-                                name={p.name}  
-                                image={p.images[0]} 
-                                quantidadeInicial={1}
+                                productId={p.product.id}  
+                                name={p.product.name}  
+                                image={p.product.images[0]} 
+                                quantity={p.quantity}
+                                itemId={p.id}
+                                price={Number(p.product.price)}
                             />
                         ))
                     ) : (
@@ -32,7 +40,7 @@ const Carrinho = async () => {
                     )}
                 </section>
 
-                <PedidoResumo />
+                <PedidoResumo valorTotal={valorTotal ?? 0} user={!!session?.user}/>
             </div>
         </main>
     );
